@@ -38,7 +38,7 @@
           close = $('<div id="zenbox-close">&times;</div>')
         )
       );
-      $('body').append(elements);
+      $('body').prepend(elements);
     },
 
     _attachListeners = function() {
