@@ -80,7 +80,7 @@
 
   $.zenbox.defaults = {
     modal: false,
-    style: "fancy"
+    style: "fancy learnist"
   };
 
   $.zenbox.show = function(target, options) {
