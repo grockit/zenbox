@@ -73,6 +73,11 @@
         width:  target[0].offsetWidth
       });
       elements.removeClass("staging");
+    },
+
+    _removeIfTagged = function(target) {
+      target = $(target);
+      if (target.data('zenbox-remove-on-close')) target.remove();
     }
   ;
 
@@ -101,6 +106,7 @@
     }
 
     this.modal(options.modal);
+    target.data('zenbox-remove-on-close', options.removeOnClose || false);
     isShown = true;
     _stage(target);
     target.trigger('zenbox-shown');
@@ -116,11 +122,16 @@
       frame.one(transitionEnd, function() {
         target.trigger('zenbox-closed');
         target.css('visibility', 'hidden');
+        if (target.data('zenbox-remove-on-close')) target.remove();
       });
     } else {
       target.trigger('zenbox-closed');
       target.css('visibility', 'hidden');
+      if (target.data('zenbox-remove-on-close')) target.remove();
     }
+    frame.children().each(function(index, element) {
+      _removeIfTagged(element);
+    });
   };
 
   $.zenbox.modal = function(setModal) {
