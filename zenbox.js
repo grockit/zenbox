@@ -85,6 +85,12 @@
 
   $.zenbox.show = function(target, options) {
     if (!(target instanceof $)) target = $(target);
+    target.css('visibility', 'visible');
+    var children = frame.children(':not(#zenbox-close)');
+    if (children.length) {
+      children.first().trigger('zenbox-transition-out');
+      children.first().css('visibility', 'hidden');
+    }
     target.trigger('zenbox-show');
     options = $.extend({}, this.defaults, typeof options === 'object' && options);
 
@@ -109,9 +115,11 @@
     if (frame.css('visibility') === 'visible') {
       frame.one(transitionEnd, function() {
         target.trigger('zenbox-closed');
+        target.css('visibility', 'hidden');
       });
     } else {
       target.trigger('zenbox-closed');
+      target.css('visibility', 'hidden');
     }
   };
 
